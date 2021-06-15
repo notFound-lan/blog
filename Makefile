@@ -1,0 +1,2 @@
+debug:
+	hexo s --debug
