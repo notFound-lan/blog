@@ -89,7 +89,7 @@
   "resolved" "https://registry.nlark.com/binary-extensions/download/binary-extensions-2.2.0.tgz"
   "version" "2.2.0"
 
-"bluebird@^3.2.2", "bluebird@^3.5.1", "bluebird@^3.5.2", "bluebird@^3.5.5":
+"bluebird@^3.2.2", "bluebird@^3.5.0", "bluebird@^3.5.1", "bluebird@^3.5.2", "bluebird@^3.5.5":
   "integrity" "sha1-nyKcFb4nJFT/qXOs4NvueaGww28= sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg=="
   "resolved" "https://registry.nlark.com/bluebird/download/bluebird-3.7.2.tgz?cache=0&sync_timestamp=1618847007562&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fbluebird%2Fdownload%2Fbluebird-3.7.2.tgz"
   "version" "3.7.2"
@@ -467,6 +467,18 @@
     "resolve" "^1.11.0"
     "tildify" "^2.0.0"
 
+"hexo-deployer-git@^3.0.0":
+  "integrity" "sha1-2oL3o0Rd8rITkm3I0DC6VJm2jPM="
+  "resolved" "https://registry.npm.taobao.org/hexo-deployer-git/download/hexo-deployer-git-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "bluebird" "^3.5.0"
+    "chalk" "^4.0.0"
+    "hexo-fs" "^3.0.1"
+    "hexo-util" "^2.1.0"
+    "moment" "^2.18.0"
+    "nunjucks" "^3.2.1"
+
 "hexo-front-matter@^2.0.0":
   "integrity" "sha1-A/Oanu2xbFRI27O+x9/yxOIkAGw= sha512-IR3tjAyK2Ga/0a/WDAoNy5+n3ju2/mkuAsCDEeGgGLf5+7kkiOkkG/FrnueuYgz0h2MPfWDLBiDsSTCmB0sLCA=="
   "resolved" "https://registry.npm.taobao.org/hexo-front-matter/download/hexo-front-matter-2.0.0.tgz?cache=0&sync_timestamp=1596018795995&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhexo-front-matter%2Fdownload%2Fhexo-front-matter-2.0.0.tgz"
@@ -826,7 +838,7 @@
   dependencies:
     "moment" ">= 2.9.0"
 
-"moment@^2.22.2", "moment@>= 2.9.0":
+"moment@^2.18.0", "moment@^2.22.2", "moment@>= 2.9.0":
   "integrity" "sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M= sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
   "resolved" "https://registry.npm.taobao.org/moment/download/moment-2.29.1.tgz"
   "version" "2.29.1"
