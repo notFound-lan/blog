@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>hexo 简易教程 - 挂机中～</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content="Hexo 是一个快速、简洁且高效的博客框架，特点  支持 markdown，提供友好的写作模式 支持主题，有大量开源主题可供选择 使用简单，一键生成静态文件，方便部署  本篇文章记录了我的整个搭建过程，供参考～">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo 简易教程">
+<meta property="og:url" content="https://www.voiddme.cc/2021/06/22/hexo/hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="挂机中～">
+<meta property="og:description" content="Hexo 是一个快速、简洁且高效的博客框架，特点  支持 markdown，提供友好的写作模式 支持主题，有大量开源主题可供选择 使用简单，一键生成静态文件，方便部署  本篇文章记录了我的整个搭建过程，供参考～">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cat-4638664_960_720.jpg">
+<meta property="article:published_time" content="2021-06-22T14:26:33.000Z">
+<meta property="article:modified_time" content="2021-06-22T14:29:58.000Z">
+<meta property="article:author" content="蓝同学">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cat-4638664_960_720.jpg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
+  <link rel="stylesheet" href="/css/style.css?v=1624409321846">
+  
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624409321846">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/20210623002530.png)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="蓝同学" class="mdui-btn mdui-btn-icon"><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cavalier-king-charles-spaniel-5952324_960_720.jpg" alt="蓝同学"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="蓝同学">
+            <img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cavalier-king-charles-spaniel-5952324_960_720.jpg" alt="蓝同学" alt="蓝同学">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>1</div>
+        <div><span>标签</span>1</div>
+        <div><span>分类</span>1</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/archives.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/hexo/">hexo</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/06/22/hexo/hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">hexo 简易教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2021 蓝同学
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+
+  <article>
+    
+        <div class="nexmoe-post-cover" style="padding-bottom: NaN%;"> 
+            <img data-src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/20210623003811.png" data-sizes="auto" alt="hexo 简易教程" class="lazyload">
+            <h1>hexo 简易教程</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年06月22日</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 5 分钟</a>
+</div>
+
+    
+
+    <br>
+
+<p>Hexo 是一个快速、简洁且高效的博客框架，特点</p>
+<ul>
+<li>支持 markdown，提供友好的写作模式</li>
+<li>支持主题，有大量开源主题可供选择</li>
+<li>使用简单，一键生成静态文件，方便部署</li>
+</ul>
+<p>本篇文章记录了我的整个搭建过程，供参考～</p>
+<span id="more"></span>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># https://github.com/nvm-sh/nvm</span></span><br><span class="line">➜  blog git:(master) ✗ nvm --version</span><br><span class="line">0.30.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置默认 node 版本：nvm install v16.0.0</span></span><br><span class="line">➜  blog git:(master) ✗ node --version</span><br><span class="line">v16.0.0</span><br><span class="line"></span><br><span class="line">➜  blog git:(master) ✗ git version</span><br><span class="line">git version 2.31.0</span><br></pre></td></tr></table></figure>
+
+<p>hexo 安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br><span class="line"></span><br><span class="line">➜  blog git:(master) ✗ hexo version</span><br><span class="line">INFO  Validating config</span><br><span class="line">hexo: 5.4.0</span><br><span class="line">hexo-cli: 4.2.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo init blog</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></table></figure>
+
+<p>执行以上命令后，可以在控制台看到如下日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">00:35:35.041 INFO  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br><span class="line">00:35:35.046 DEBUG Database saved</span><br><span class="line">00:35:36.489 DEBUG Rendering HTML index: index.html</span><br></pre></td></tr></table></figure>
+
+<p>打开 <code>localhost:4000</code> 可以看到博客已经成功部署并运行</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">➜  blog git:(master) ✗ tree -I node_modules</span><br><span class="line">.</span><br><span class="line">├── _config.landscape.yml <span class="comment"># 主题配置，默认主题是 landscape</span></span><br><span class="line">├── _config.yml <span class="comment"># hexo 配置</span></span><br><span class="line">├── db.json</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds <span class="comment"># 模板文件，创建文章时将会从这里选择指定文件作为模板</span></span><br><span class="line">│   ├── draft.md</span><br><span class="line">│   ├── page.md</span><br><span class="line">│   └── post.md</span><br><span class="line">├── <span class="built_in">source</span> <span class="comment"># 文章地址</span></span><br><span class="line">│   └── _posts <span class="comment"># 当前文件夹默认作为发布文件夹，里面的文件会被渲染展示</span></span><br><span class="line">│       └── hello-world.md <span class="comment"># 我们打开 `localhost:4000` 展示的文件，可以是 markdown 或其他格式如 pug，只要安装了对应插件</span></span><br><span class="line">├── themes</span><br><span class="line">└── yarn.lock</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  blog git:(master) ✗ hexo new test-article-1</span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  Created: /private/tmp/blog/blog/<span class="built_in">source</span>/_posts/test-article-1.md</span><br><span class="line"></span><br><span class="line">➜  blog git:(master) ✗ hexo new page --path _posts/topic1/article1 <span class="string">&quot;主题1的第一篇  文章&quot;</span></span><br><span class="line">INFO  Validating config</span><br><span class="line">INFO  Created: /private/tmp/blog/blog/<span class="built_in">source</span>/_posts/topic1/article1.md</span><br></pre></td></tr></table></figure>
+
+<p>这里我们创建了两篇文章</p>
+<ul>
+<li><code>_posts/test-article-1</code> 使用默认模版 <code>scaffolds/post.md</code>  </li>
+<li><code>_posts/topic1/article1.md</code> 指定 <code>scaffolds/page.md</code> 模版，重新指定了路径</li>
+</ul>
+<p>如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  blog git:(master) ✗ tree <span class="built_in">source</span></span><br><span class="line"><span class="built_in">source</span></span><br><span class="line">└── _posts</span><br><span class="line">    ├── hello-world.md</span><br><span class="line">    ├── test-article-1.md</span><br><span class="line">    └── topic1</span><br><span class="line">        └── article1.md</span><br></pre></td></tr></table></figure>
+
+<h2 id="静态文件"><a href="#静态文件" class="headerlink" title="静态文件"></a>静态文件</h2><p>最终我们将博客部署到服务器，部署的是静态文件，即 <code>public</code> 目录</p>
+<p>生成静态文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为了简洁，隐去了部分文件</span></span><br><span class="line">➜  blog git:(master) ✗ tree public</span><br><span class="line">public</span><br><span class="line">├── 2021</span><br><span class="line">│   └── 06</span><br><span class="line">│       └── 22</span><br><span class="line">│           ├── hello-world</span><br><span class="line">│           │   └── index.html</span><br><span class="line">│           └── topic1</span><br><span class="line">│               └── article1</span><br><span class="line">│                   └── index.html</span><br><span class="line">├── archives</span><br><span class="line">│   ├── 2021</span><br><span class="line">│   │   ├── 06</span><br><span class="line">│   │   │   └── index.html</span><br><span class="line">│   │   └── index.html</span><br><span class="line">│   └── index.html</span><br><span class="line">├── css</span><br><span class="line">│   ├── fonts</span><br><span class="line">│   │   ├── FontAwesome.otf</span><br><span class="line">│   ├── images</span><br><span class="line">│   │   └── banner.jpg</span><br><span class="line">│   └── style.css</span><br><span class="line">├── fancybox</span><br><span class="line">│   ├── jquery.fancybox.min.css</span><br><span class="line">├── index.html</span><br><span class="line">└── js</span><br><span class="line">    ├── jquery-3.4.1.min.js</span><br><span class="line">    └── script.js</span><br></pre></td></tr></table></figure>
+
+<p>我们在 public 目录起一个服务器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -S localhost:8080</span><br></pre></td></tr></table></figure>
+
+<p>访问 <code>http://localhost:8080</code>，正常访问博客内容</p>
+<p>可以发现，public 包含了网站所需的所有内容，因此只要将 public 目录推送到我们的服务器，即完成部署</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>根目录下有两个文件</p>
+<ul>
+<li><code>_config.yaml</code></li>
+<li><code>_config.landscape.yml</code> </li>
+</ul>
+<p>前者是 hexo 默认配置，配置项含义可以查阅 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration%EF%BC%8C%E4%B8%BB%E8%A6%81%E5%81%9A%E4%BA%86%E4%B8%A4%E4%BB%B6%E4%BA%8B">https://hexo.io/zh-cn/docs/configuration，主要做了两件事</a></p>
+<ul>
+<li>设置 cli 的行为，比如模板路径，draft 是否渲染，文件路径等等</li>
+<li>控制静态文件内容，比如网站的 title、url、分页行为等</li>
+</ul>
+<p>后者是主题配置，比如一些主题支持社交组件（如 微信、知乎、github 等），可以在这个配置文件进行自定义配置</p>
+<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><h3 id="文章添加-tag-和-category"><a href="#文章添加-tag-和-category" class="headerlink" title="文章添加 tag 和 category"></a>文章添加 tag 和 category</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">xxx:</span><br><span class="line">tags:</span><br><span class="line">- hexo</span><br><span class="line">categories:</span><br><span class="line">- [hexo]</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<h3 id="图片管理"><a href="#图片管理" class="headerlink" title="图片管理"></a>图片管理</h3><p>纯编辑器在 markdown 插入图片一直是一件很繁琐的事，这里我决定采用 阿里云OSS+PicGo 的方式，主要解决</p>
+<ul>
+<li>图片插入困难问题，比如截图需要保存文件，再通过 tag 引用</li>
+<li>图片需要手动管理，难以维护</li>
+</ul>
+<p>oss 购买及图床使用请参考 <a href="https://zhuanlan.zhihu.com/p/104152479" title="external" target="">阿里云OSS PicGo 配置图床教程 超详细</a></p>
+<p>然后就可以简单的上传并插入图片，比如</p>
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cat-4638664_960_720.jpg" />
+
+<p>ps：发现一个免费图片素材库，且图片非常小 <a target="_blank" rel="noopener" href="https://pixabay.com/zh/">https://pixabay.com/zh/</a></p>
+<p>关于 picGo，添加插件 <a target="_blank" rel="noopener" href="https://github.com/gclove/picgo-plugin-super-prefix%EF%BC%8C">https://github.com/gclove/picgo-plugin-super-prefix，</a> 并关闭上传重命名，可以获得较规范的域名，<code>https://xxxx.aliyuncs.com/img/2021/06/23/20210623082611.png</code></p>
+<h2 id="使用模板"><a href="#使用模板" class="headerlink" title="使用模板"></a>使用模板</h2><p>我选择的是 <a target="_blank" rel="noopener" href="https://docs.nexmoe.com/">https://docs.nexmoe.com/</a> 文档写的很详细了，跟着走就行，下面列出一些文档没有体现的点</p>
+<h3 id="添加目录"><a href="#添加目录" class="headerlink" title="添加目录"></a>添加目录</h3><p>见 <a target="_blank" rel="noopener" href="https://github.com/theme-nexmoe/hexo-theme-nexmoe/issues/73">https://github.com/theme-nexmoe/hexo-theme-nexmoe/issues/73</a></p>
+<p>只要在 blog header 添加 <code>toc: 1</code>，如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: xxx</span><br><span class="line">date: xxx</span><br><span class="line">toc: 1</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>如果你是自建服务器，比如放在一个 nginx 后面，参考 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/one-command-deployment">https://hexo.io/zh-cn/docs/one-command-deployment</a></p>
+<p>我采用 github page 的方式，见 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/github-pages">https://hexo.io/zh-cn/docs/github-pages</a></p>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>蓝同学<br>
+    <strong>本文链接：</strong><a href="https://www.voiddme.cc/2021/06/22/hexo/hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/" title="https:&#x2F;&#x2F;www.voiddme.cc&#x2F;2021&#x2F;06&#x2F;22&#x2F;hexo&#x2F;hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;www.voiddme.cc&#x2F;2021&#x2F;06&#x2F;22&#x2F;hexo&#x2F;hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/hexo/">hexo</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/hexo/" rel="tag">hexo</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    
+  </div>
+</div>
+        <div class="nexmoe-post-right">
+          <div class="nexmoe-fixed">
+            <div class="nexmoe-tool"> 
+              
+                
+                  
+                  
+                  
+                    <button class="mdui-fab catalog mdui-ripple" style="overflow:unset;">
+                      <i class="nexmoefont icon-i-catalog"></i>
+                      <div class="nexmoe-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E7%AB%A0"><span class="toc-number">4.</span> <span class="toc-text">创建新文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">静态文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0-tag-%E5%92%8C-category"><span class="toc-number">7.1.</span> <span class="toc-text">文章添加 tag 和 category</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%86"><span class="toc-number">7.2.</span> <span class="toc-text">图片管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF"><span class="toc-number">8.</span> <span class="toc-text">使用模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">8.1.</span> <span class="toc-text">添加目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">9.</span> <span class="toc-text">部署</span></a></li></ol>
+                      </div>
+                    </button>
+                  
+                    
+                
+              
+              <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ 
+
+<script async src="/js/app.js?v=1624409321857"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+  
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?54fc41544ceb9d5bb39a532e74cf7e4a';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>
