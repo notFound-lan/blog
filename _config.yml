@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 挂机中～
+title: day day up
 subtitle: ''
 description: ''
 keywords:
@@ -99,13 +99,3 @@ ignore:
 ## Themes: https://hexo.io/themes/
 # theme: landscape
 theme: nexmoe
-
-# Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: git
-  repository: https://github.com/notFound-lan/blog.github.io
-  branch: gh-pages
-  name: voiddme
-  email: voiddme@gmail.com
-

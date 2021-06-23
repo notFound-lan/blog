@@ -30,7 +30,7 @@ Hexo 是一个快速、简洁且高效的博客框架，特点
 ➜  blog git:(master) ✗ nvm --version
 0.30.2
 
-# 设置默认 node 版本：nvm install v16.0.0
+# 设置默认 node 版本：nvm install v16.0.0 && nvm alias default v16.0.0
 ➜  blog git:(master) ✗ node --version
 v16.0.0
 
@@ -169,9 +169,9 @@ php -S localhost:8080
 - `_config.yaml`
 - `_config.landscape.yml` 
 
-前者是 hexo 默认配置，配置项含义可以查阅 https://hexo.io/zh-cn/docs/configuration，主要做了两件事
-- 设置 cli 的行为，比如模板路径，draft 是否渲染，文件路径等等
-- 控制静态文件内容，比如网站的 title、url、分页行为等
+前者是 hexo 默认配置，配置项含义可以查阅 https://hexo.io/zh-cn/docs/configuration ，主要做了两件事
+- 配置 cli 的行为，比如模板路径，draft 是否渲染，文件路径等等
+- 配置生成的静态文件内容，比如网站的 布局、title、url、分页行为等
 
 后者是主题配置，比如一些主题支持社交组件（如 微信、知乎、github 等），可以在这个配置文件进行自定义配置
 
@@ -203,7 +203,7 @@ oss 购买及图床使用请参考 {% link 阿里云OSS PicGo 配置图床教程
 
 ps：发现一个免费图片素材库，且图片非常小 https://pixabay.com/zh/
 
-关于 picGo，添加插件 https://github.com/gclove/picgo-plugin-super-prefix， 并关闭上传重命名，可以获得较规范的域名，`https://xxxx.aliyuncs.com/img/2021/06/23/20210623082611.png`
+关于 picGo，添加插件 https://github.com/gclove/picgo-plugin-super-prefix， 并关闭上传重命名，可以获得较规范的路径，`/img/2021/06/23/20210623082611.png`
 
 ## 使用模板
 
@@ -227,3 +227,41 @@ toc: 1
 如果你是自建服务器，比如放在一个 nginx 后面，参考 https://hexo.io/zh-cn/docs/one-command-deployment
 
 我采用 github page 的方式，见 https://hexo.io/zh-cn/docs/github-pages
+
+提交 master 后，会触发 ci-cd，生成 public 并提交到 gh-pages 分支，再由 github 完成静态文件更新
+
+这时候就可以通过 `xxx.github.io` 的二级域名访问了
+
+### 自定义域名和 https 支持
+
+首先 dig 一下获得 ip `dig xxx.github.io` 
+
+```bash
+[root@xxx ~]# dig notfound-lan.github.io
+
+; <<>> DiG 9.9.4-RedHat-9.9.4-74.el7_6.2 <<>> notfound-lan.github.io
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 7643
+;; flags: qr rd ra; QUERY: 1, ANSWER: 4, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;notfound-lan.github.io.		IN	A
+
+;; ANSWER SECTION:
+notfound-lan.github.io.	3600	IN	A	185.199.110.153
+notfound-lan.github.io.	3600	IN	A	185.199.111.153
+notfound-lan.github.io.	3600	IN	A	185.199.109.153
+notfound-lan.github.io.	3600	IN	A	185.199.108.153
+```
+
+然后配置四条 A 记录指向上面四个 ip，再建一条 CCA 记录，参考 https://help.aliyun.com/document_detail/65537.html
+
+接着在 github 上用自定义域名替代默认 xxx.github.io 域名
+
+
+## 总结
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/23/20210623181937.png" />
