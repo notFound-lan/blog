@@ -1,2 +1,2 @@
 debug:
-	hexo s --debug -p 4001
+	hexo clean && hexo s --debug -p 4001

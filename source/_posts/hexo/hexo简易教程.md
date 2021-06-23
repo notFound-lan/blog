@@ -3,6 +3,7 @@ title: hexo 简易教程
 date: 2021-06-22 22:26:33
 updated: 2021-06-22 22:29:58
 cover: https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/20210623003811.png
+toc: 1
 tags:
 - hexo
 categories:
@@ -202,6 +203,27 @@ oss 购买及图床使用请参考 {% link 阿里云OSS PicGo 配置图床教程
 
 ps：发现一个免费图片素材库，且图片非常小 https://pixabay.com/zh/
 
+关于 picGo，添加插件 https://github.com/gclove/picgo-plugin-super-prefix， 并关闭上传重命名，可以获得较规范的域名，`https://xxxx.aliyuncs.com/img/2021/06/23/20210623082611.png`
+
 ## 使用模板
 
-我选择的是 https://docs.nexmoe.com/ 
+我选择的是 https://docs.nexmoe.com/ 文档写的很详细了，跟着走就行，下面列出一些文档没有体现的点
+
+### 添加目录
+
+见 https://github.com/theme-nexmoe/hexo-theme-nexmoe/issues/73
+
+只要在 blog header 添加 `toc: 1`，如下
+
+```bash
+---
+title: xxx
+date: xxx
+toc: 1
+```
+
+## 部署
+
+如果你是自建服务器，比如放在一个 nginx 后面，参考 https://hexo.io/zh-cn/docs/one-command-deployment
+
+我采用 github page 的方式，见 https://hexo.io/zh-cn/docs/github-pages
