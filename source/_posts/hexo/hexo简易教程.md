@@ -19,6 +19,8 @@ Hexo 是一个快速、简洁且高效的博客框架，特点
 
 本篇文章记录了我的整个搭建过程，供参考～
 
+-----
+
 <!-- more -->
 
 ## 安装
@@ -92,7 +94,7 @@ hexo s --debug
 INFO  Validating config
 INFO  Created: /private/tmp/blog/blog/source/_posts/test-article-1.md
 
-➜  blog git:(master) ✗ hexo new page --path _posts/topic1/article1 "主题1的第一篇  文章"
+➜  blog git:(master) ✗ hexo new page --path topic1/article1 "主题1的第一篇  文章"
 INFO  Validating config
 INFO  Created: /private/tmp/blog/blog/source/_posts/topic1/article1.md
 ```
