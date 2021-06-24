@@ -39,8 +39,8 @@ Kong 是一个云原生、高效的、可扩展的、分布式的 API 网关，�
 - 当服务达到一定量级时，基本都不可管理、不可维护
 
 第一个问题可以通过在服务前挂一个 Nginx，然后通过 Nginx 的反向代理来解决，第二个问题也可以通过 Nginx + 模块的模式实现，但实现复杂，维护困难，不具备实践价值。但是，理论上，Nginx 具备解决以上问题的底层能力，因此有了两个演进的产品或工具
-- [OpenResty](https://openresty.org/cn/installation.html)：OpenResty 是[春哥](https://github.com/agentzh)主导和开源的项目，主要包括三部分：1. 一个完整的 Nginx 服务器；2. [lua-nginx-module](https://github.com/openresty/lua-nginx-module)，是一个标准的 Nginx模块，它将 lua 嵌入 nginx，提供了 lua 编写 nginx 插件的能力；3. 基于第一项，提供了很多常用的 lua 插件。意味着，当我们安装 OpenResty，它就具备了 Nginx 的所有能力，有很多常用的开箱即用的 lua 插件，并且支持通过编写 lua 脚本对 Nginx 进行扩展
-- Kong：Kong 是基于 OpenResty 的产品，更近一步，对 `nginx.conf` 进行抽象，用户可以动态修改，同时通过 adminAPI 对外提供 restful 接口，支持通过 webAPI 动态更新路由。同时，将插件平台化，提供了众多开箱即用的插件，并支持自定义插件
+- [OpenResty](https://openresty.org/cn/installation.html)：OpenResty 是[春哥](https://github.com/agentzh)主导和开源的项目，主要包括三部分：1. 一个完整的 Nginx 服务器；2. [lua-nginx-module](https://github.com/openresty/lua-nginx-module)，是一个标准的 Nginx模块，它将 lua 嵌入 nginx，提供了 lua 编写 nginx 插件的能力；3. 基于第二项，提供了很多常用的 lua 插件。意味着，当我们安装 OpenResty，它就具备了 Nginx 的所有能力，有很多常用的开箱即用的 lua 插件，并且支持通过编写 lua 脚本对 Nginx 进行扩展
+- Kong：Kong 是基于 OpenResty 的产品，更进一步，对 `nginx.conf` 进行抽象，用户可以动态修改，同时通过 adminAPI 对外提供 restful 接口，支持通过 webAPI 动态更新路由。同时，将插件平台化，提供了众多开箱即用的插件，并支持自定义插件
 
 用 Kong 替换前面的 Nginx，变成
 
@@ -97,6 +97,8 @@ kong:
 `8001` 是 kong 默认的 http adminAPI，我们将其映射到主机的 8011 端口，因此你可以直接在主机访问 `localhost:8011`。`8000` 是默认的流量入口，我们将其映射到主机的 8010 端口，因此你可以直接在主机访问 `localhost:8010`，此时没有配置任何路由，因此将会获得 Kong 的无路由响应
 
 ## 配置一个服务
+
+### 目标
 
 通过 konga 配置一个服务，本质上是配置一个 nginx.conf，我们先看一个简单的 nginx.conf 文件
 
@@ -193,6 +195,17 @@ target
 ### 坑
 
 - 深灰色的配置，代表你填写后需要回车，否则保存将会失败
+
+## 总结
+
+API 网关是应用达到一定规模后的必备基础设施，而 Kong 是性价比较高的一个选项。
+
+学习 Kong 时，需要配合 Nginx，理解当前的修改，最终是利用了 Nginx 的哪项底层能力
+- Kong 各种对象，及其配置，可以映射到 nginx.conf
+- Kong 的插件实现及自定义开发，依托于 OpenResty 提供的 Lua 能力，而底层是基于 nginx 的请求 phrase
+- Kong 的各种功能，比如反向代理、负载均衡，本质也是体现到 nginx.conf
+
+Konga 利用 adminAPI 管理 Kong 集群，也就是我们也可以直接调用 adminAPI，但有 UI 界面明显更利于入门和后续的维护
 
 ## 参考
 

@@ -263,7 +263,12 @@ notfound-lan.github.io.	3600	IN	A	185.199.108.153
 
 接着在 github 上用自定义域名替代默认 xxx.github.io 域名
 
-
 ## 总结
 
 <img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/23/20210623181937.png" />
+
+## QA
+
+### 发版自定义域名失效
+
+在 `source` 目录下创建文件 CNAME，并加入自定义域名
