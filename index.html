@@ -21,9 +21,9 @@
 <meta property="article:author" content="蓝同学">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
-  <link rel="stylesheet" href="/css/style.css?v=1624457466890">
+  <link rel="stylesheet" href="/css/style.css?v=1624496881392">
   
-  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624457466890">
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624496881392">
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="mdui-drawer-body-left">
@@ -47,9 +47,9 @@
         </a>
     </div>
     <div class="nexmoe-count">
-        <div><span>文章</span>1</div>
-        <div><span>标签</span>1</div>
-        <div><span>分类</span>1</div>
+        <div><span>文章</span>2</div>
+        <div><span>标签</span>2</div>
+        <div><span>分类</span>2</div>
     </div>
     <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
         
@@ -104,6 +104,13 @@
         </li>
 
         
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/kong/">kong</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
       </ul>
 
     </div>
@@ -114,7 +121,7 @@
   
   <div class="nexmoe-widget-wrap">
     <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
-      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a>
+      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/kong/" style="font-size: 10px;">kong</a>
     </div>
     
   </div>
@@ -125,6 +132,10 @@
     <h3 class="nexmoe-widget-title">最新文章</h3>
     <div class="nexmoe-widget">
       <ul>
+        
+          <li>
+            <a href="/2021/06/23/kong/kong-starter/">kong 入门</a>
+          </li>
         
           <li>
             <a href="/2021/06/22/hexo/hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">hexo 简易教程</a>
@@ -147,6 +158,37 @@
   <div id="nexmoe-content">
     <div class="nexmoe-primary">
         <section class="nexmoe-posts">
+    
+    <div class="nexmoe-post">
+        <a href="/2021/06/23/kong/kong-starter/">
+            
+                <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: NaN%;"> 
+                    <img data-src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/20210623002530.png" data-sizes="auto" alt="kong 入门" class="lazyload">
+                    <h1>kong 入门</h1>
+                </div>
+            
+        </a>
+
+        <div class="nexmoe-post-meta nexmoe-rainbow">
+            <a><i class="nexmoefont icon-calendar-fill"></i>2021年06月23日</a>
+            <a><i class="nexmoefont icon-areachart"></i>1.5k 字</a>
+            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 6 分钟</a>
+        </div>
+
+        <article>
+            
+                <br>
+
+<p>Kong 是一个云原生、高效的、可扩展的、分布式的 API 网关，我们使用 Kong，通常是基于以下目的</p>
+<ul>
+<li>统一流量入口，Kong 集群暴露一个公网 ip，所有外部请求经过这个 ip，打到内部服务</li>
+<li>安全管控、开发提效。Kong 是一个插件式平台，所有接入 Kong 的应用通过开启对应插件，获得如，日志、认证、限流等功能</li>
+</ul>
+<p>这是 Kong 系列文章的第一篇，本篇文章将会介绍 Kong 的基础知识，利用 Docker 搭建一个本地 Kong 服务，以及，通过 Konga 对 Kong 集群进行管理～</p>
+<hr>
+            
+        </article>
+    </div>
     
     <div class="nexmoe-post">
         <a href="/2021/06/22/hexo/hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">
@@ -175,6 +217,7 @@
 <li>使用简单，一键生成静态文件，方便部署</li>
 </ul>
 <p>本篇文章记录了我的整个搭建过程，供参考～</p>
+<hr>
             
         </article>
     </div>
@@ -201,7 +244,7 @@
 <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
  
 
-<script async src="/js/app.js?v=1624457466890"></script>
+<script async src="/js/app.js?v=1624496881393"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
