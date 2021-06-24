@@ -29,9 +29,9 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cat-4638664_960_720.jpg">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
-  <link rel="stylesheet" href="/css/style.css?v=1624497212111">
+  <link rel="stylesheet" href="/css/style.css?v=1624512378763">
   
-  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624497212111">
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624512378763">
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="mdui-drawer-body-left">
@@ -267,6 +267,9 @@
 <p>然后配置四条 A 记录指向上面四个 ip，再建一条 CCA 记录，参考 <a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/65537.html">https://help.aliyun.com/document_detail/65537.html</a></p>
 <p>接着在 github 上用自定义域名替代默认 xxx.github.io 域名</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/23/20210623181937.png" />
+
+<h2 id="QA"><a href="#QA" class="headerlink" title="QA"></a>QA</h2><h3 id="发版自定义域名失效"><a href="#发版自定义域名失效" class="headerlink" title="发版自定义域名失效"></a>发版自定义域名失效</h3><p>在 <code>source</code> 目录下创建文件 CNAME，并加入自定义域名</p>
+
   </article>
 
   
@@ -306,7 +309,7 @@
                     <button class="mdui-fab catalog mdui-ripple" style="overflow:unset;">
                       <i class="nexmoefont icon-i-catalog"></i>
                       <div class="nexmoe-toc">
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E7%AB%A0"><span class="toc-number">4.</span> <span class="toc-text">创建新文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">静态文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0-tag-%E5%92%8C-category"><span class="toc-number">7.1.</span> <span class="toc-text">文章添加 tag 和 category</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%86"><span class="toc-number">7.2.</span> <span class="toc-text">图片管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF"><span class="toc-number">8.</span> <span class="toc-text">使用模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">8.1.</span> <span class="toc-text">添加目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">9.</span> <span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%92%8C-https-%E6%94%AF%E6%8C%81"><span class="toc-number">9.1.</span> <span class="toc-text">自定义域名和 https 支持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">创建项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E6%96%87%E7%AB%A0"><span class="toc-number">4.</span> <span class="toc-text">创建新文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">静态文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E6%B7%BB%E5%8A%A0-tag-%E5%92%8C-category"><span class="toc-number">7.1.</span> <span class="toc-text">文章添加 tag 和 category</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%86"><span class="toc-number">7.2.</span> <span class="toc-text">图片管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%A8%A1%E6%9D%BF"><span class="toc-number">8.</span> <span class="toc-text">使用模板</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">8.1.</span> <span class="toc-text">添加目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2"><span class="toc-number">9.</span> <span class="toc-text">部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%92%8C-https-%E6%94%AF%E6%8C%81"><span class="toc-number">9.1.</span> <span class="toc-text">自定义域名和 https 支持</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QA"><span class="toc-number">11.</span> <span class="toc-text">QA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E7%89%88%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9F%9F%E5%90%8D%E5%A4%B1%E6%95%88"><span class="toc-number">11.1.</span> <span class="toc-text">发版自定义域名失效</span></a></li></ol></li></ol>
                       </div>
                     </button>
                   
@@ -327,7 +330,7 @@
 <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
  
 
-<script async src="/js/app.js?v=1624497212127"></script>
+<script async src="/js/app.js?v=1624512378780"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
