@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>Nginx 基础 - day day up</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content="Nginx 是一个 http 服务器、反向代理服务器、邮件代理服务器、通用的 TCP&#x2F;UDP 反向代理服务器。特点是开源、轻量级，高性能 Nginx 实际使用场景大概有  静态文件服务器 反向代理 负载均衡 动静分离">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx 基础">
+<meta property="og:url" content="https://www.voiddme.cc/2021/06/24/kong/nginx%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="day day up">
+<meta property="og:description" content="Nginx 是一个 http 服务器、反向代理服务器、邮件代理服务器、通用的 TCP&#x2F;UDP 反向代理服务器。特点是开源、轻量级，高性能 Nginx 实际使用场景大概有  静态文件服务器 反向代理 负载均衡 动静分离">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625082856.png">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083430.png">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083228.png">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083404.png">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625090901.png">
+<meta property="article:published_time" content="2021-06-24T15:37:11.000Z">
+<meta property="article:modified_time" content="2021-06-25T01:14:53.673Z">
+<meta property="article:author" content="蓝同学">
+<meta property="article:tag" content="kong">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625082856.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
+  <link rel="stylesheet" href="/css/style.css?v=1624583720845">
+  
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624583720845">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/20210623002530.png)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="蓝同学" class="mdui-btn mdui-btn-icon"><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cavalier-king-charles-spaniel-5952324_960_720.jpg" alt="蓝同学"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="蓝同学">
+            <img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cavalier-king-charles-spaniel-5952324_960_720.jpg" alt="蓝同学" alt="蓝同学">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>3</div>
+        <div><span>标签</span>3</div>
+        <div><span>分类</span>2</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/archives.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/hexo/">hexo</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/kong/">kong</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/kong/" style="font-size: 20px;">kong</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/06/24/kong/nginx%E5%85%A5%E9%97%A8/">Nginx 基础</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/23/kong/kong-starter/">kong 入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/22/hexo/hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">hexo 简易教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2021 蓝同学
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+
+  <article>
+    
+        <div class="nexmoe-post-cover" style="padding-bottom: NaN%;"> 
+            <img data-src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/24/20210624144422.png" data-sizes="auto" alt="Nginx 基础" class="lazyload">
+            <h1>Nginx 基础</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年06月24日</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 5 分钟</a>
+</div>
+
+    
+
+    <br>
+
+<p>Nginx 是一个 http 服务器、反向代理服务器、邮件代理服务器、通用的 TCP/UDP 反向代理服务器。特点是开源、轻量级，高性能</p>
+<p>Nginx 实际使用场景大概有</p>
+<ul>
+<li>静态文件服务器</li>
+<li>反向代理</li>
+<li>负载均衡</li>
+<li>动静分离</li>
+</ul>
+<hr>
+<span id="more"></span>
+
+<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>官方文档初看会很疑惑，我们只需要关注 <a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/">NGINX Plus</a> 中非 Plus 的文档，或者直接看这里 <a target="_blank" rel="noopener" href="https://www.nginx.com/resources/wiki/start/">NGINX WIKI</a>。Plus 是收费版本，剩下的大多数产品都是配套 Plus 使用，如 NGINX Controller, NGINX App Protect，不用关注；部分是云原生组件，比如 NGINX Ingress Controller，暂时也不用关注</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>虚拟机部署，可以参考 <a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/">Installing NGINX Open Source</a></p>
+</blockquote>
+<p>我们通过 docker-compose 安装，在目录下执行 <code>make start</code>，服务启动，接着访问服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@823231eac657:/<span class="comment"># curl -i localhost:8001</span></span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.19.6</span><br><span class="line">Date: Fri, 25 Jun 2021 00:37:45 GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: 4</span><br><span class="line">Last-Modified: Thu, 24 Jun 2021 16:28:06 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line">ETag: <span class="string">&quot;60d4b296-4&quot;</span></span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line"></span><br><span class="line">app2</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>make exec</code> 命令，可以进到 nginx 内部，查看服务基本情况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">➜  nginx-docker git:(master) ✗ make <span class="built_in">exec</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以看到启动进程及其启动命令</span></span><br><span class="line">root@bd251f379733:/<span class="comment"># ps aux</span></span><br><span class="line">USER     TAT START   TIME COMMAND</span><br><span class="line">root     Ss+  07:13   0:00 nginx: master process nginx -g daemon off;</span><br><span class="line">nginx    S+   07:13   0:00 nginx: worker process</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二进制位置</span></span><br><span class="line">root@bd251f379733:/<span class="comment"># which nginx</span></span><br><span class="line">/usr/sbin/nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件</span></span><br><span class="line">root@bd251f379733:/etc/nginx<span class="comment"># tree</span></span><br><span class="line">.</span><br><span class="line">|-- conf.d</span><br><span class="line">|   `-- default.conf</span><br><span class="line">|-- fastcgi_params</span><br><span class="line">|-- koi-utf</span><br><span class="line">|-- koi-win</span><br><span class="line">|-- mime.types</span><br><span class="line">|-- modules -&gt; /usr/lib/nginx/modules</span><br><span class="line">|-- nginx.conf</span><br><span class="line">|-- scgi_params</span><br><span class="line">|-- uwsgi_params</span><br><span class="line">`-- win-utf</span><br></pre></td></tr></table></figure>
+
+<p>基本逻辑</p>
+<ul>
+<li>我们将 <code>app/nginx</code> 下的配置文件挂载到了容器，因此在主机修改这些配置，然后重启 Nginx（make reload），即可生效；我们将 <code>app/html</code> 下的文件挂载到了容器，因此修改这里的文件，可以让响应即时生效</li>
+<li>Nginx 根据 nginx.conf 启动配置文件，流量经过 Nginx 时，会根据这些配置进行路由匹配并转发给对应的 upstream 处理</li>
+</ul>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><blockquote>
+<p>完整配置：<a target="_blank" rel="noopener" href="https://www.nginx.com/resources/wiki/start/topics/examples/full/">Full Example Configuration</a> <a target="_blank" rel="noopener" href="https://www.nginx.com/resources/wiki/start/topics/examples/fullexample2/">Another Full Example</a></p>
+</blockquote>
+<p>Nginx 是一个声明式配置服务器，基本使用方式：修改配置文件，nginx 加载配置文件，配置生效</p>
+<p>配置文件基本结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">  server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    server_name  www.example.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    error_page   500 502 503 504  /50x.html;</span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>http</code> 代表一个 http 服务器，全局只能有一个</li>
+<li><code>server</code> 代表一个虚拟主机，虚拟主机用 <code>hostname:port</code> 来定义，这里表示 <code>www.example.com:80</code> 的流量会命中这个服务</li>
+<li><code>location</code> 路由，请求命中 server 后，需要继续进行路由匹配，比如用户访问 <code>www.example.com:80/50x.html</code>，会命中第二个 location</li>
+<li>location 里面定义具体的 upstream，可以是对静态文件的访问，或者反向代理到指定后端，或者负载均衡到多个后端</li>
+</ul>
+<p>以上是一个最基本的结构，除此之外，Nginx 通过内置指令和模块，提供了一个 web 服务器和代理服务器所需的几乎所有功能</p>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><blockquote>
+<p>PS: 后面的所有访问默认都在容器内执行。通过 <code>make exec</code> 进入容器</p>
+</blockquote>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>创建两个后端</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>       <span class="number">8000</span>;</span><br><span class="line">    <span class="attribute">server_name</span>  localhost;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">root</span>   /usr/share/nginx/html/app1;</span><br><span class="line">        <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">8001</span>;</span><br><span class="line">    <span class="attribute">server_name</span> localhost;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">root</span>   /usr/share/nginx/html/app2;</span><br><span class="line">        <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以下每个功能，均会创建 <code>$feat_name.conf</code> 文件，存放在 <code>nginx/conf.d</code> 文件夹下，如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">➜  app git:(master) ✗ tree nginx </span><br><span class="line">nginx</span><br><span class="line">├── conf.d</span><br><span class="line">│   ├── default.conf</span><br><span class="line">│   ├── lb</span><br><span class="line">│   │   ├── http.conf</span><br><span class="line">│   │   └── tcp.conf</span><br><span class="line">│   └── web</span><br><span class="line">│       ├── reverse_proxy.conf</span><br><span class="line">│       └── static_content.conf</span><br><span class="line">└── nginx.conf</span><br></pre></td></tr></table></figure>
+
+<h3 id="静态文件服务器"><a href="#静态文件服务器" class="headerlink" title="静态文件服务器"></a>静态文件服务器</h3><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625082856.png" />
+
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083430.png" />
+
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">4000</span>;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:8000;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过 proxy_pass 可以将流量转发到 <code>127.0.0.1:8000</code> </p>
+<h3 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h3><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083228.png" />
+
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083404.png" />
+
+<h4 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h4><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> backend &#123;</span><br><span class="line">    <span class="comment"># 默认使用 Round Robin 算法</span></span><br><span class="line">    <span class="comment"># least_conn; # 请求将会转发给最少活跃连接的服务器</span></span><br><span class="line">    <span class="comment"># ip_hash;</span></span><br><span class="line">    <span class="comment"># hash $request_uri consistent;  </span></span><br><span class="line">    <span class="comment"># random;</span></span><br><span class="line">    <span class="attribute">server</span> <span class="number">127.0.0.1:8000</span> weight=<span class="number">1</span>; <span class="comment"># 权重越高。命中的概率越大。默认是 1</span></span><br><span class="line">    <span class="attribute">server</span> <span class="number">127.0.0.1:8001</span> weight=<span class="number">5</span>;</span><br><span class="line">    <span class="comment"># server 10.0.0.1 backup; # 当上面两个都挂了，打到这个服务器</span></span><br><span class="line">    <span class="comment"># server 10.0.2.1 down;</span></span><br><span class="line">    <span class="comment"># 会话保持，plus 功能。开源版本使用 hash 或 ip_hash</span></span><br><span class="line">    <span class="comment"># sticky cookie srv_id expires=1h domain=.example.com path=/;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">3000</span>;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://backend;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><h3 id="其他重要参数"><a href="#其他重要参数" class="headerlink" title="其他重要参数"></a>其他重要参数</h3><h4 id="backlog"><a href="#backlog" class="headerlink" title="backlog"></a>backlog</h4><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625090901.png" />
+
+<ul>
+<li>同步队列默认为 128 <code>/proc/sys/net/ipv4/tcp_max_syn_backlog</code></li>
+<li>消费队列默认为 128 <code>/proc/sys/net/core/somaxconn</code></li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.nginx.com/resources/wiki/start/">Nginx Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nginx.com/nginx-instance-manager/getting-started/">Nginx Doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://openresty.org/download/agentzh-nginx-tutorials-en.html">agentzh’s Nginx Tutorizals</a></li>
+<li><a target="_blank" rel="noopener" href="http://nginx.org/en/docs/dev/development_guide.html">Nginx Development Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://tengine.taobao.org/nginx_docs/cn/docs/http/request_processing.html">tengine taobao nginx docs</a></li>
+</ul>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>蓝同学<br>
+    <strong>本文链接：</strong><a href="https://www.voiddme.cc/2021/06/24/kong/nginx%E5%85%A5%E9%97%A8/" title="https:&#x2F;&#x2F;www.voiddme.cc&#x2F;2021&#x2F;06&#x2F;24&#x2F;kong&#x2F;nginx%E5%85%A5%E9%97%A8&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;www.voiddme.cc&#x2F;2021&#x2F;06&#x2F;24&#x2F;kong&#x2F;nginx%E5%85%A5%E9%97%A8&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/kong/">kong</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/kong/" rel="tag">kong</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/nginx/" rel="tag">nginx</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    
+  </div>
+</div>
+        <div class="nexmoe-post-right">
+          <div class="nexmoe-fixed">
+            <div class="nexmoe-tool"> 
+              
+                
+                  
+                  
+                  
+                    <button class="mdui-fab catalog mdui-ripple" style="overflow:unset;">
+                      <i class="nexmoefont icon-i-catalog"></i>
+                      <div class="nexmoe-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF"><span class="toc-number">4.</span> <span class="toc-text">场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">4.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">4.2.</span> <span class="toc-text">静态文件服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB"><span class="toc-number">4.4.</span> <span class="toc-text">动静分离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-number">4.5.</span> <span class="toc-text">负载均衡</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP"><span class="toc-number">4.5.1.</span> <span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TCP"><span class="toc-number">4.5.2.</span> <span class="toc-text">TCP</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E5%8F%82%E6%95%B0"><span class="toc-number">4.6.</span> <span class="toc-text">其他重要参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#backlog"><span class="toc-number">4.6.1.</span> <span class="toc-text">backlog</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+                      </div>
+                    </button>
+                  
+                    
+                
+              
+              <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ 
+
+<script async src="/js/app.js?v=1624583720858"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+  
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?54fc41544ceb9d5bb39a532e74cf7e4a';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>
