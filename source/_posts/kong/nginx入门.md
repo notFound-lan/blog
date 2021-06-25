@@ -1,0 +1,234 @@
+---
+title: Nginx 基础
+cover: 'https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/24/20210624144422.png'
+toc: 1
+categories:
+- [kong]
+date: 2021-06-24 23:37:11
+tags:
+- kong
+- nginx
+---
+
+<br>
+
+Nginx 是一个 http 服务器、反向代理服务器、邮件代理服务器、通用的 TCP/UDP 反向代理服务器。特点是开源、轻量级，高性能
+
+Nginx 实际使用场景大概有
+- 静态文件服务器
+- 反向代理
+- 负载均衡
+- 动静分离
+
+-----
+
+<!-- more -->
+
+## 写在前面
+
+官方文档初看会很疑惑，我们只需要关注 [NGINX Plus](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) 中非 Plus 的文档，或者直接看这里 [NGINX WIKI](https://www.nginx.com/resources/wiki/start/)。Plus 是收费版本，剩下的大多数产品都是配套 Plus 使用，如 NGINX Controller, NGINX App Protect，不用关注；部分是云原生组件，比如 NGINX Ingress Controller，暂时也不用关注
+
+## 安装
+
+> 虚拟机部署，可以参考 [Installing NGINX Open Source](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
+
+我们通过 docker-compose 安装，在目录下执行 `make start`，服务启动，接着访问服务
+
+```bash
+root@823231eac657:/# curl -i localhost:8001
+HTTP/1.1 200 OK
+Server: nginx/1.19.6
+Date: Fri, 25 Jun 2021 00:37:45 GMT
+Content-Type: text/html
+Content-Length: 4
+Last-Modified: Thu, 24 Jun 2021 16:28:06 GMT
+Connection: keep-alive
+ETag: "60d4b296-4"
+Accept-Ranges: bytes
+
+app2
+```
+
+通过 `make exec` 命令，可以进到 nginx 内部，查看服务基本情况
+
+```bash
+➜  nginx-docker git:(master) ✗ make exec
+
+# 可以看到启动进程及其启动命令
+root@bd251f379733:/# ps aux
+USER     TAT START   TIME COMMAND
+root     Ss+  07:13   0:00 nginx: master process nginx -g daemon off;
+nginx    S+   07:13   0:00 nginx: worker process
+
+# 二进制位置
+root@bd251f379733:/# which nginx
+/usr/sbin/nginx
+
+# 配置文件
+root@bd251f379733:/etc/nginx# tree
+.
+|-- conf.d
+|   `-- default.conf
+|-- fastcgi_params
+|-- koi-utf
+|-- koi-win
+|-- mime.types
+|-- modules -> /usr/lib/nginx/modules
+|-- nginx.conf
+|-- scgi_params
+|-- uwsgi_params
+`-- win-utf
+```
+
+基本逻辑
+- 我们将 `app/nginx` 下的配置文件挂载到了容器，因此在主机修改这些配置，然后重启 Nginx（make reload），即可生效；我们将 `app/html` 下的文件挂载到了容器，因此修改这里的文件，可以让响应即时生效
+- Nginx 根据 nginx.conf 启动配置文件，流量经过 Nginx 时，会根据这些配置进行路由匹配并转发给对应的 upstream 处理
+
+## 配置文件
+
+> 完整配置：[Full Example Configuration](https://www.nginx.com/resources/wiki/start/topics/examples/full/) [Another Full Example](https://www.nginx.com/resources/wiki/start/topics/examples/fullexample2/)
+
+Nginx 是一个声明式配置服务器，基本使用方式：修改配置文件，nginx 加载配置文件，配置生效
+
+配置文件基本结构
+```conf
+http {
+  server {
+    listen       80;
+    server_name  www.example.com;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+  }
+}
+```
+
+- `http` 代表一个 http 服务器，全局只能有一个
+- `server` 代表一个虚拟主机，虚拟主机用 `hostname:port` 来定义，这里表示 `www.example.com:80` 的流量会命中这个服务
+- `location` 路由，请求命中 server 后，需要继续进行路由匹配，比如用户访问 `www.example.com:80/50x.html`，会命中第二个 location
+- location 里面定义具体的 upstream，可以是对静态文件的访问，或者反向代理到指定后端，或者负载均衡到多个后端
+
+以上是一个最基本的结构，除此之外，Nginx 通过内置指令和模块，提供了一个 web 服务器和代理服务器所需的几乎所有功能
+
+## 场景
+
+> PS: 后面的所有访问默认都在容器内执行。通过 `make exec` 进入容器
+
+### 准备工作
+
+创建两个后端
+
+```nginx
+server {
+    listen       8000;
+    server_name  localhost;
+
+    location / {
+        root   /usr/share/nginx/html/app1;
+        index  index.html index.htm;
+    }
+}
+
+server {
+    listen 8001;
+    server_name localhost;
+    location / {
+        root   /usr/share/nginx/html/app2;
+        index  index.html index.htm;
+    } 
+}
+```
+
+以下每个功能，均会创建 `$feat_name.conf` 文件，存放在 `nginx/conf.d` 文件夹下，如下
+
+```bash
+➜  app git:(master) ✗ tree nginx 
+nginx
+├── conf.d
+│   ├── default.conf
+│   ├── lb
+│   │   ├── http.conf
+│   │   └── tcp.conf
+│   └── web
+│       ├── reverse_proxy.conf
+│       └── static_content.conf
+└── nginx.conf
+```
+
+### 静态文件服务器
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625082856.png" />
+
+### 反向代理
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083430.png" />
+
+```nginx
+server {
+    listen 4000;
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+    }
+}
+```
+
+通过 proxy_pass 可以将流量转发到 `127.0.0.1:8000` 
+
+### 动静分离
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083228.png" />
+
+### 负载均衡
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083404.png" />
+
+#### HTTP 
+
+```nginx
+upstream backend {
+    # 默认使用 Round Robin 算法
+    # least_conn; # 请求将会转发给最少活跃连接的服务器
+    # ip_hash;
+    # hash $request_uri consistent;  
+    # random;
+    server 127.0.0.1:8000 weight=1; # 权重越高。命中的概率越大。默认是 1
+    server 127.0.0.1:8001 weight=5;
+    # server 10.0.0.1 backup; # 当上面两个都挂了，打到这个服务器
+    # server 10.0.2.1 down;
+    # 会话保持，plus 功能。开源版本使用 hash 或 ip_hash
+    # sticky cookie srv_id expires=1h domain=.example.com path=/;
+}
+
+server {
+    listen 3000;
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+
+#### TCP 
+
+### 其他重要参数 
+
+#### backlog
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625090901.png" />
+
+- 同步队列默认为 128 `/proc/sys/net/ipv4/tcp_max_syn_backlog`
+- 消费队列默认为 128 `/proc/sys/net/core/somaxconn`
+
+## 参考
+
+- [Nginx Wiki](https://www.nginx.com/resources/wiki/start/)
+- [Nginx Doc](https://docs.nginx.com/nginx-instance-manager/getting-started/)
+- [agentzh's Nginx Tutorizals](https://openresty.org/download/agentzh-nginx-tutorials-en.html)
+- [Nginx Development Guide](http://nginx.org/en/docs/dev/development_guide.html)
+- [tengine taobao nginx docs](https://tengine.taobao.org/nginx_docs/cn/docs/http/request_processing.html)

@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  nginx:
+    build:
+      context: .
+    volumes:
+      - ./app/html:/usr/share/nginx/html
+      - ./app/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./app/nginx/conf.d:/etc/nginx/conf.d
+    stdin_open: true
+    tty: true
