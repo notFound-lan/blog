@@ -1,5 +1,6 @@
 ---
 title: 关于
+cover: https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210626182441.jpeg
 layout: about 
 ---
 
