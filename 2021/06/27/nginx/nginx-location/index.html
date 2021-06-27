@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>nginx location 路由匹配规则 - day day up</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
+  <meta name="description" content="如上图所示，请求匹配到虚拟主机后，继续由 location 指令进行路由。location 定义了路由模式，以及对请求的具体处理方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx location 路由匹配规则">
+<meta property="og:url" content="https://www.voiddme.cc/2021/06/27/nginx/nginx-location/index.html">
+<meta property="og:site_name" content="day day up">
+<meta property="og:description" content="如上图所示，请求匹配到虚拟主机后，继续由 location 指令进行路由。location 定义了路由模式，以及对请求的具体处理方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627212110.png">
+<meta property="og:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627232151.png">
+<meta property="article:published_time" content="2021-06-27T12:54:50.000Z">
+<meta property="article:modified_time" content="2021-06-27T15:25:59.108Z">
+<meta property="article:author" content="蓝同学">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627212110.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
+  <link rel="stylesheet" href="/css/style.css?v=1624807614934">
+  
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624807614934">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/20210623002530.png)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="蓝同学" class="mdui-btn mdui-btn-icon"><img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cavalier-king-charles-spaniel-5952324_960_720.jpg" alt="蓝同学"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="蓝同学">
+            <img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/cavalier-king-charles-spaniel-5952324_960_720.jpg" alt="蓝同学" alt="蓝同学">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>5</div>
+        <div><span>标签</span>3</div>
+        <div><span>分类</span>3</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/archives.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Nginx/">Nginx</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/hexo/">hexo</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/kong/">kong</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/kong/" style="font-size: 10px;">kong</a> <a href="/tags/nginx/" style="font-size: 20px;">nginx</a>
+    </div>
+    
+  </div>
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/06/27/nginx/nginx-location/">nginx location 路由匹配规则</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/26/nginx/nginx%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/">Nginx 如何处理一个请求</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/24/nginx/nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">Nginx 应用场景举例</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/23/kong/kong-starter/">kong 入门</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/22/hexo/hexo%E7%AE%80%E6%98%93%E6%95%99%E7%A8%8B/">hexo 简易教程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2021 蓝同学
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+
+  <article>
+    
+        <div class="nexmoe-post-cover" style="padding-bottom: NaN%;"> 
+            <img data-src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627210644.jpeg" data-sizes="auto" alt="nginx location 路由匹配规则" class="lazyload">
+            <h1>nginx location 路由匹配规则</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年06月27日</a>
+    <a><i class="nexmoefont icon-areachart"></i>444 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+</div>
+
+    
+
+    <br>
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627212110.png" />
+
+<p>如上图所示，请求匹配到虚拟主机后，继续由 <code>location</code> 指令进行路由。location 定义了路由模式，以及对请求的具体处理方法</p>
+<hr>
+<span id="more"></span>
+
+<h2 id="location-指令"><a href="#location-指令" class="headerlink" title="location 指令"></a>location 指令</h2><p><code>location</code> 可以定义在 <code>server</code> 和 <code>location</code> 两个 context 中，指令语法</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> [ modifier ] uri &#123; ... &#125; <span class="comment"># 这里我们只关心这种</span></span><br><span class="line"><span class="attribute">location</span> @name &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从类别上，location 可以分为两大类</p>
+<ul>
+<li>前缀匹配</li>
+<li>正则表达式</li>
+</ul>
+<p>modifier 有以下几项</p>
+<ul>
+<li>空，前缀匹配。放在第一步查找</li>
+<li><code>=</code> 完全匹配。放在第一步查找，如果匹配到，则不走第二步</li>
+<li><code>^~</code> 前缀匹配，放在第一步查找，如果匹配到，则不走第二步</li>
+<li><code>~</code> 大小写敏感的正则匹配</li>
+<li><code>~*</code> 大小写不敏感的正则匹配</li>
+</ul>
+<h2 id="路由匹配方式"><a href="#路由匹配方式" class="headerlink" title="路由匹配方式"></a>路由匹配方式</h2><ul>
+<li>先找出契合度最高的前缀匹配路由：顺序无关 + 最长前缀匹配。如果该路由 modifier 是 <code>^~</code> 或 <code>=</code> 则直接用这个 location，否则暂存并继续第二步</li>
+<li>按配置顺序查找，找到第一个匹配的正则路由。如果没有匹配的正则路由，则使用第一步找到的前缀路由</li>
+</ul>
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627232151.png" />
+
+<h2 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">4500</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 1</span></span><br><span class="line">    <span class="attribute">location</span> = / &#123; </span><br><span class="line">        <span class="attribute">return</span> <span class="number">201</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 2</span></span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">202</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 3</span></span><br><span class="line">    <span class="attribute">location</span> /documents/ &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">203</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 4</span></span><br><span class="line">    <span class="comment"># 因为 5 的存在，所以 /images/xxx 永远匹配到第五项</span></span><br><span class="line">    <span class="attribute">location</span> <span class="regexp">~* ^/image./</span> &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">205</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 5</span></span><br><span class="line">    <span class="attribute">location</span><span class="regexp"> ^~</span> /images/ &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">204</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 6</span></span><br><span class="line">    <span class="attribute">location</span> <span class="regexp">~* \.(gif|jpg|jpeg)$</span> &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">206</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>/</code> 匹配到配置 1。前缀匹配</li>
+<li><code>/index.html</code> 匹配到配置 2。前缀匹配 -&gt; 正则匹配 -&gt; 前缀匹配项 </li>
+<li><code>/documents/document.html</code> 匹配配置 3。前缀匹配 -&gt; 正则匹配 -&gt; 前缀匹配项</li>
+<li><code>/images/1.gif</code> 匹配到配置 5。前缀匹配</li>
+<li><code>/documents/1.jpg</code> 匹配到配置 6。前缀匹配 -&gt; 正则匹配</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://nginx.org/en/docs/http/ngx_http_core_module.html#location">ngx_http_core_module#location</a></li>
+</ul>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>蓝同学<br>
+    <strong>本文链接：</strong><a href="https://www.voiddme.cc/2021/06/27/nginx/nginx-location/" title="https:&#x2F;&#x2F;www.voiddme.cc&#x2F;2021&#x2F;06&#x2F;27&#x2F;nginx&#x2F;nginx-location&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;www.voiddme.cc&#x2F;2021&#x2F;06&#x2F;27&#x2F;nginx&#x2F;nginx-location&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/Nginx/">Nginx</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/nginx/" rel="tag">nginx</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    
+  </div>
+</div>
+        <div class="nexmoe-post-right">
+          <div class="nexmoe-fixed">
+            <div class="nexmoe-tool"> 
+              
+                
+                  
+                  
+                  
+                    <button class="mdui-fab catalog mdui-ripple" style="overflow:unset;">
+                      <i class="nexmoefont icon-i-catalog"></i>
+                      <div class="nexmoe-toc">
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#location-%E6%8C%87%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">location 指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%8C%B9%E9%85%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">路由匹配方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+                      </div>
+                    </button>
+                  
+                    
+                
+              
+              <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ 
+
+<script async src="/js/app.js?v=1624807614941"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+  
+
+
+
+
+
+    <!-- baidu Analytics -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {var hm = document.createElement('script');
+    hm.src = 'https://hm.baidu.com/hm.js?54fc41544ceb9d5bb39a532e74cf7e4a';
+    var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</body>
+
+</html>

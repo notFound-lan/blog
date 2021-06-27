@@ -21,9 +21,9 @@
 <meta property="article:author" content="蓝同学">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
-  <link rel="stylesheet" href="/css/style.css?v=1624772789406">
+  <link rel="stylesheet" href="/css/style.css?v=1624807615022">
   
-  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624772789406">
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624807615022">
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="mdui-drawer-body-left">
@@ -47,9 +47,9 @@
         </a>
     </div>
     <div class="nexmoe-count">
-        <div><span>文章</span>4</div>
+        <div><span>文章</span>5</div>
         <div><span>标签</span>3</div>
-        <div><span>分类</span>2</div>
+        <div><span>分类</span>3</div>
     </div>
     <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
         
@@ -92,6 +92,13 @@
         
 
         <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Nginx/">Nginx</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
           <a class="category-list-link" href="/categories/hexo/">hexo</a>
           <span class="category-list-count">1</span>
         </li>
@@ -100,7 +107,7 @@
 
         <li class="category-list-item">
           <a class="category-list-link" href="/categories/kong/">kong</a>
-          <span class="category-list-count">3</span>
+          <span class="category-list-count">1</span>
         </li>
 
         
@@ -114,7 +121,7 @@
   
   <div class="nexmoe-widget-wrap">
     <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
-      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/kong/" style="font-size: 20px;">kong</a> <a href="/tags/nginx/" style="font-size: 20px;">nginx</a>
+      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/kong/" style="font-size: 10px;">kong</a> <a href="/tags/nginx/" style="font-size: 20px;">nginx</a>
     </div>
     
   </div>
@@ -127,11 +134,15 @@
       <ul>
         
           <li>
-            <a href="/2021/06/26/kong/nginx%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/">Nginx 如何处理一个请求</a>
+            <a href="/2021/06/27/nginx/nginx-location/">nginx location 路由匹配规则</a>
           </li>
         
           <li>
-            <a href="/2021/06/24/kong/nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">Nginx 应用场景举例</a>
+            <a href="/2021/06/26/nginx/nginx%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/">Nginx 如何处理一个请求</a>
+          </li>
+        
+          <li>
+            <a href="/2021/06/24/nginx/nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">Nginx 应用场景举例</a>
           </li>
         
           <li>
@@ -161,7 +172,35 @@
         <section class="nexmoe-posts">
     
     <div class="nexmoe-post">
-        <a href="/2021/06/26/kong/nginx%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/">
+        <a href="/2021/06/27/nginx/nginx-location/">
+            
+                <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: NaN%;"> 
+                    <img data-src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627210644.jpeg" data-sizes="auto" alt="nginx location 路由匹配规则" class="lazyload">
+                    <h1>nginx location 路由匹配规则</h1>
+                </div>
+            
+        </a>
+
+        <div class="nexmoe-post-meta nexmoe-rainbow">
+            <a><i class="nexmoefont icon-calendar-fill"></i>2021年06月27日</a>
+            <a><i class="nexmoefont icon-areachart"></i>444 字</a>
+            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 1 分钟</a>
+        </div>
+
+        <article>
+            
+                <br>
+
+<img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210627212110.png" />
+
+<p>如上图所示，请求匹配到虚拟主机后，继续由 <code>location</code> 指令进行路由。location 定义了路由模式，以及对请求的具体处理方法</p>
+<hr>
+            
+        </article>
+    </div>
+    
+    <div class="nexmoe-post">
+        <a href="/2021/06/26/nginx/nginx%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/">
             
                 <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: NaN%;"> 
                     <img data-src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210626131623.png" data-sizes="auto" alt="Nginx 如何处理一个请求" class="lazyload">
@@ -195,7 +234,7 @@
     </div>
     
     <div class="nexmoe-post">
-        <a href="/2021/06/24/kong/nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
+        <a href="/2021/06/24/nginx/nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">
             
                 <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: NaN%;"> 
                     <img data-src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210626131623.png" data-sizes="auto" alt="Nginx 应用场景举例" class="lazyload">
@@ -312,7 +351,7 @@
 <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
  
 
-<script async src="/js/app.js?v=1624772789407"></script>
+<script async src="/js/app.js?v=1624807615023"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
