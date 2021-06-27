@@ -3,7 +3,7 @@ title: Nginx 如何处理一个请求
 cover: 'https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210626131623.png'
 toc: 1
 categories:
-  - [kong]
+  - [Nginx]
 date: 2021-06-26 11:26:43
 tags:
 - nginx

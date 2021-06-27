@@ -3,10 +3,9 @@ title: Nginx 应用场景举例
 cover: https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210626131623.png
 toc: 1
 categories:
-- [kong]
+- [Nginx]
 date: 2021-06-24 23:37:11
 tags:
-- kong
 - nginx
 ---
 
