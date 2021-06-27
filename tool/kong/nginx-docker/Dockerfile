@@ -11,4 +11,5 @@ RUN apt update -y \
     procps \
     tree \
     net-tools \
-    apache2-utils
+    apache2-utils \
+    netcat

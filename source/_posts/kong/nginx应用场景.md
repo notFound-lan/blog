@@ -1,5 +1,5 @@
 ---
-title: Nginx 基础
+title: Nginx 应用场景举例
 cover: https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/20210626131623.png
 toc: 1
 categories:
@@ -14,7 +14,7 @@ tags:
 
 Nginx 是一个 http 服务器、反向代理服务器、邮件代理服务器、通用的 TCP/UDP 反向代理服务器。特点是开源、轻量级，高性能
 
-Nginx 常用使用场景大概有
+Nginx 常见使用场景有
 - 静态文件服务器
 - 反向代理
 - 负载均衡
@@ -31,7 +31,7 @@ Nginx 常用使用场景大概有
 官方文档大概有以下几个
 
 - [official Nginx Wiki -- 偏向场景介绍](https://www.nginx.com/resources/wiki/start/)
-- [official Nginx Doc -- 手册类型](https://docs.nginx.com/nginx-instance-manager/getting-started/)
+- [official Nginx Doc -- 手册类型](https://nginx.org/en/docs/)
 - [official Nginx Development -- 内部实现](http://nginx.org/en/docs/dev/development_guide.html)
 - [official admin guide --功能介绍](https://docs.nginx.com/nginx/admin-guide/basic-functionality/runtime-control/)
 
@@ -39,7 +39,7 @@ Nginx 常用使用场景大概有
 
 > 虚拟机部署，可以参考 [Installing NGINX Open Source](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/)
 
-我们通过 docker-compose 安装，在目录下执行 `make start`，服务启动，接着访问服务
+我们通过 docker-compose 安装，在[此目录](https://github.com/notFound-lan/blog/tree/master/tool/kong/nginx-docker)下执行 `make start`，服务启动，接着访问服务
 
 ```bash
 root@823231eac657:/# curl -i localhost:8001
@@ -87,15 +87,23 @@ root@bd251f379733:/etc/nginx# tree
 `-- win-utf
 ```
 
-基本逻辑
-- 我们将 `app/nginx` 下的配置文件挂载到了容器，因此在主机修改这些配置，然后重启 Nginx（make reload），即可生效；我们将 `app/html` 下的文件挂载到了容器，因此修改这里的文件，可以让响应即时生效
-- Nginx 根据 nginx.conf 启动配置文件，流量经过 Nginx 时，会根据这些配置进行路由匹配并转发给对应的 upstream 处理
+我们将 `app/nginx` 下的配置文件挂载到了容器，因此在主机修改这些配置，然后重启 Nginx（`make reload`），即可生效；我们将 `app/html` 下的文件挂载到了容器，因此修改这里的文件，可以让响应即时生效
+
+### 常用命令
+
+通过 `nginx -h` 查看
+
+```bash
+nginx -V # 查看 nginx 版本和配置信息
+nginx -t # 配置文件语法校验
+nginx -s reload # 重新加载配置文件。-s 表示给 nginx 发送 signal，包括 stop, quit, reopen, reload
+```
 
 ## 配置文件
 
 > 完整配置：[Full Example Configuration](https://www.nginx.com/resources/wiki/start/topics/examples/full/) [Another Full Example](https://www.nginx.com/resources/wiki/start/topics/examples/fullexample2/)
 
-Nginx 是一个声明式配置服务器，基本使用方式：修改配置文件，nginx 加载配置文件，配置生效
+Nginx 是一个声明式配置服务器，基本使用方式：**修改配置文件，nginx 加载配置文件，配置生效，nginx 根据配置对请求进行处理**
 
 配置文件基本结构
 ```conf
@@ -122,7 +130,7 @@ http {
 - `location` 路由，请求命中 server 后，需要继续进行路由匹配，比如用户访问 `www.example.com:80/50x.html`，会命中第二个 location
 - location 里面定义具体的 upstream，可以是对静态文件的访问，或者反向代理到指定后端，或者负载均衡到多个后端
 
-以上是一个最基本的结构，除此之外，Nginx 通过内置指令和模块，提供了一个 web 服务器和代理服务器所需的绝大部分功能
+以上是一个最基本的结构，除此之外，Nginx 通过内置指令和模块，提供了一个 web 服务器和代理服务器所需的大部分功能
 
 ## 场景
 
@@ -133,6 +141,8 @@ http {
 创建两个后端
 
 ```nginx
+# nginx/conf.d/default.conf
+
 server {
     listen       8000;
 
@@ -155,16 +165,20 @@ server {
 以下每个功能，均会创建 `$feat_name.conf` 文件，存放在 `nginx/conf.d` 文件夹下，如下
 
 ```bash
-➜  app git:(master) ✗ tree nginx 
+  app git:(master) ✗ tree nginx 
 nginx
 ├── conf.d
-│   ├── default.conf
-│   ├── lb
-│   │   ├── http.conf
-│   │   └── tcp.conf
-│   └── web
-│       ├── reverse_proxy.conf
-│       └── static_content.conf
+│   ├── http
+│   │   ├── default.conf
+│   │   ├── feat
+│   │   │   └── backlog.conf
+│   │   ├── lb
+│   │   │   └── http.conf
+│   │   └── web
+│   │       ├── reverse_proxy.conf
+│   │       └── static_content.conf
+│   └── tcp
+│       └── default.conf
 └── nginx.conf
 ```
 
@@ -183,7 +197,7 @@ server {
 
     root /usr/share/nginx/html/app1;
 
-    location / { # 其他无法匹配的路由均匹配到这里，nginx 会到 root 配置的目录下查找文件并发送给客户端
+    location / { 
         index index.html;
     }
 }
@@ -240,7 +254,7 @@ app1
 
 ### 反向代理
 
-反向代理，指用户本来要访问后面的服务，但因为我们在前面架了个 nginx（同时域名也解析到了 Nginx 所在的机器），导致用户流量被 nginx 接受了，nginx 经过某些处理后，再将流量转发到后端服务，最后按原路返回。此时用户并不能感知到中间 Nginx 的存在
+反向代理，指用户本来要访问指定的服务，但因为我们在前面架了个 nginx（同时域名也解析到了 Nginx 所在的机器），导致用户流量被 nginx 接收，nginx 处理后，再将流量转发到后端服务，最后按原路返回。此时用户并不能感知到中间 Nginx 的存在
 
 反向代理的一般场景
 - 在公网和内部服务建立一道屏障，方便服务的管理和实施一些安全措施
@@ -326,11 +340,30 @@ server {
 
 ### 负载均衡
 
-后端一个副本容易导致单点故障，或者无法支撑日常流量，因此，线上服务一般是多个副本模式，通过 nginx，可以用不同的负载均衡算法将用户请求打到后端某个节点
+后端一个副本容易导致单点故障，或者无法支撑日常流量，因此，线上服务一般是多副本模式，通过 nginx，可以用不同的负载均衡算法将用户请求打到后端某个节点
 
 <img src="https://voiddme-blog-public.oss-cn-beijing.aliyuncs.com/img/2021/06/25/20210625083404.png" />
 
 #### HTTP 
+
+##### 最简版
+
+```nginx
+
+upstream backend {
+    server 127.0.0.1:8000;
+    server 127.0.0.1:8001;
+}
+
+server {
+    listen 3000;
+    location / {
+        proxy_pass http://backend;
+    }
+}
+```
+
+##### 学习版
 
 ```nginx
 upstream backend {
@@ -357,6 +390,22 @@ server {
 
 #### TCP 
 
+采用 tcp 协议，配置上和 http 类似，包括负载均衡。
+
+一些前置工作
+- 容器内启动 tcp 服务：`nc -v -l -p 8999`
+- 启动 tcp 客户端 `nc 127.0.0.1 9000` 就可以通过 nginx 和内部的 tcp 服务通信了
+
+```最简版
+# 现在容器内启动一个 tcp 服务：nc -v -l -p 8999
+# 更新当前配置后，通过 9000 端口就可以和上述 tcp 服务通信
+# 启动一个客户端连接到 9000 端口：nc 127.0.0.1 9000
+server {
+    listen 9000;
+    proxy_pass 127.0.0.1:8999;
+}
+```
+
 ### 其他重要参数 
 
 #### 压缩
@@ -369,10 +418,9 @@ server {
 - 消费队列默认为 128 `/proc/sys/net/core/somaxconn`
 
 ## 参考
-
+- [official Nginx Doc -- 手册类型](https://nginx.org/en/docs/)
 - [official Nginx Wiki -- 偏向场景介绍](https://www.nginx.com/resources/wiki/start/)
-- [official Nginx Doc -- 手册类型](https://docs.nginx.com/nginx-instance-manager/getting-started/)
 - [agentzh's Nginx Tutorizals](https://openresty.org/download/agentzh-nginx-tutorials-en.html)
-- [official Nginx Development -- Guide 实现](http://nginx.org/en/docs/dev/development_guide.html)
+- [official Nginx Development -- 实现](http://nginx.org/en/docs/dev/development_guide.html)
 - [tengine taobao nginx docs](https://tengine.taobao.org/nginx_docs/cn/docs/http/request_processing.html)
-- [official admin guide --功能介绍](https://docs.nginx.com/nginx/admin-guide/basic-functionality/runtime-control/)
+- [official admin guide -- 功能介绍](https://docs.nginx.com/nginx/admin-guide/basic-functionality/runtime-control/)
