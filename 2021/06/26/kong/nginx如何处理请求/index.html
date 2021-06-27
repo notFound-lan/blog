@@ -13,22 +13,22 @@
   
 
   <link rel="shortcut icon" href="/favicon.ico" type="image/png" />
-  <meta name="description" content="翻译：How nginx processes a requestwritten by Igor Sysoevedited by Brian Mercer  这是 Nginx 作者写的一篇文章，主要说明 nginx 如何处理用户请求，我阅读过程中顺手给翻译了，提前总结下  首先根据 listen 指令匹配请求 ip 和 port，可以匹配多个 server 接着根据 server_name 指">
+  <meta name="description" content="翻译：How nginx processes a requestwritten by Igor Sysoevedited by Brian Mercer  这是 Nginx 作者写的一篇文章，主要阐述了 nginx 如何处理用户请求，我阅读过程中顺手给翻译了，提前总结下  首先根据 listen 指令匹配请求 ip 和 port，可以匹配多个 server 接着根据 server_name">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx 如何处理一个请求">
 <meta property="og:url" content="https://www.voiddme.cc/2021/06/26/kong/nginx%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82/index.html">
 <meta property="og:site_name" content="day day up">
-<meta property="og:description" content="翻译：How nginx processes a requestwritten by Igor Sysoevedited by Brian Mercer  这是 Nginx 作者写的一篇文章，主要说明 nginx 如何处理用户请求，我阅读过程中顺手给翻译了，提前总结下  首先根据 listen 指令匹配请求 ip 和 port，可以匹配多个 server 接着根据 server_name 指">
+<meta property="og:description" content="翻译：How nginx processes a requestwritten by Igor Sysoevedited by Brian Mercer  这是 Nginx 作者写的一篇文章，主要阐述了 nginx 如何处理用户请求，我阅读过程中顺手给翻译了，提前总结下  首先根据 listen 指令匹配请求 ip 和 port，可以匹配多个 server 接着根据 server_name">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-06-26T03:26:43.000Z">
-<meta property="article:modified_time" content="2021-06-26T14:04:26.148Z">
+<meta property="article:modified_time" content="2021-06-27T01:58:27.289Z">
 <meta property="article:author" content="蓝同学">
 <meta property="article:tag" content="nginx">
 <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
-  <link rel="stylesheet" href="/css/style.css?v=1624716317163">
+  <link rel="stylesheet" href="/css/style.css?v=1624759134163">
   
-  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624716317163">
+  <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1624759134163">
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="mdui-drawer-body-left">
@@ -136,7 +136,7 @@
           </li>
         
           <li>
-            <a href="/2021/06/24/kong/nginx%E5%85%A5%E9%97%A8/">Nginx 基础</a>
+            <a href="/2021/06/24/kong/nginx%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF/">Nginx 应用场景举例</a>
           </li>
         
           <li>
@@ -186,7 +186,7 @@
 <blockquote>
 <p>翻译：<a target="_blank" rel="noopener" href="https://nginx.org/en/docs/http/request_processing.html">How nginx processes a request</a><br>written by Igor Sysoev<br>edited by Brian Mercer</p>
 </blockquote>
-<p>这是 Nginx 作者写的一篇文章，主要说明 nginx 如何处理用户请求，我阅读过程中顺手给翻译了，提前总结下</p>
+<p>这是 Nginx 作者写的一篇文章，主要阐述了 nginx 如何处理用户请求，我阅读过程中顺手给翻译了，提前总结下</p>
 <ul>
 <li>首先根据 <code>listen</code> 指令匹配请求 ip 和 port，可以匹配多个 server</li>
 <li>接着根据 <code>server_name</code> 指令匹配请求头 <code>host</code>，如果没有匹配的 server，则使用 <code>default_server</code>，<code>default_server</code> 可以显示指定，或者由 nginx 默认指定</li>
@@ -195,7 +195,7 @@
 <hr>
 <span id="more"></span>
 
-<h2 id="基于-server-name"><a href="#基于-server-name" class="headerlink" title="基于 server_name"></a>基于 server_name</h2><p>nginx 会先判断将请求交给哪个 server 处理。我们从下面这个简单配置开始，它有三个虚拟主机，均监听 <code>*.80</code> </p>
+<h2 id="基于名字的虚拟主机"><a href="#基于名字的虚拟主机" class="headerlink" title="基于名字的虚拟主机"></a>基于名字的虚拟主机</h2><p>nginx 会先判断将请求交给哪个 server 处理。我们从下面这个简单配置开始，它有三个虚拟主机，均监听 <code>*.80</code> </p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.org www.example.org;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.net www.example.net;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span>      <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com www.example.com;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>由于监听端口都相同，因此只需要根据 server_name 进行匹配。Nginx 将 <code>server_name</code> 和请求头 <code>Host</code> 进行匹配，如果没有找到匹配的 Server，或者请求就没带 <code>Host</code> 头，则 nginx 会将它路由到 default_server。在上述配置中，Nginx 默认会取第一个 server 作为 default_server。当然，我们也可以在 <code>listen</code> 指令中使用 <code>default_name</code> 参数显示指定：</p>
@@ -205,10 +205,10 @@
 <p><code>default_server</code> 自 0.8.21 版本可用。之前的版本请使用 <code>deault</code> 参数 </p>
 </blockquote>
 <p>注意 deault_server 是 <code>listen</code> 指令的属性，而非 <code>server_name</code></p>
-<h2 id="如何避免处理-Host-未定义的请求"><a href="#如何避免处理-Host-未定义的请求" class="headerlink" title="如何避免处理 Host 未定义的请求"></a>如何避免处理 Host 未定义的请求</h2><p>对于未携带 <code>Host</code> 请求头的流量，应该被拒绝，server 可以通过以下方式丢弃这些请求：</p>
+<h2 id="如何避免处理-Host-未定义的请求"><a href="#如何避免处理-Host-未定义的请求" class="headerlink" title="如何避免处理 Host 未定义的请求"></a>如何避免处理 Host 未定义的请求</h2><p>如果不允许未携带 <code>Host</code> 的请求，可以通过以下配置丢弃这些请求：</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">  <span class="attribute">server_name</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="attribute">return</span> <span class="number">444</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>以上配置将 server_name 设置为空字符串，它将会匹配 80 端口上所有未带 <code>Host</code> 请求头的流量，并返回一个状态码为 444 的响应，同时关闭连接。</p>
+<p>以上配置将 server_name 设置为空字符串，它将会匹配 80 端口上所有未带 <code>Host</code> 请求头的流量，并返回一个特殊的 nginx 非标准状态码 444 来关闭连接。</p>
 <blockquote>
 <p>从 0.8.48 开始，这是一个默认配置，无需我们手动配置。在更早的版本，采用主机的 hostname 作为 default server 的 server_name</p>
 </blockquote>
@@ -227,8 +227,8 @@
 
 <p>请求进来时，Nginx 会根据以下步骤来判定最终由哪个路由进行处理</p>
 <ul>
-<li>先根据字符串字面量查找匹配度最高的前缀匹配路由，此时不考虑配置顺序。以上配置仅有一个前缀匹配路由：<code>/</code>，它可以匹配任何路由，被放到最后进行匹配</li>
-<li>按配置顺序查找正则匹配项。当命中第一个匹配路由时，查找将会停止并应用这个路由项。如果所有正则都不匹配，则会使用前面找出的前缀匹配路由</li>
+<li>先用前缀匹配找出匹配度最高的 location，此时不考虑配置顺序。以上配置仅有一个前缀匹配路由：<code>/</code>，它可以匹配任何路由，被放到最后进行匹配</li>
+<li>按配置顺序查找正则匹配项。当命中第一个正则表达式时，查找将会停止，匹配到的 location 将被应用。如果所有正则都不匹配，则会使用前面找出的前缀匹配路由</li>
 </ul>
 <p>注意，所有 location 指定的路由，均只会匹配请求的 uri 部分，不包括参数，这么做是因为 query string 格式是不确定的，比如：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/index.php?user=john&amp;page=1</span><br><span class="line">/index.php?page=1&amp;user=john</span><br></pre></td></tr></table></figure>
@@ -283,7 +283,7 @@
                     <button class="mdui-fab catalog mdui-ripple" style="overflow:unset;">
                       <i class="nexmoefont icon-i-catalog"></i>
                       <div class="nexmoe-toc">
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-server-name"><span class="toc-number">1.</span> <span class="toc-text">基于 server_name</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%A4%84%E7%90%86-Host-%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="toc-number">2.</span> <span class="toc-text">如何避免处理 Host 未定义的请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%90%8D%E7%A7%B0%E5%92%8Cip%E7%9A%84%E6%B7%B7%E5%90%88%E8%99%9A%E6%8B%9F%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">基于名称和ip的混合虚拟服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84-php-%E7%BD%91%E7%AB%99%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">一个简单的 php 网站配置</span></a></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%90%8D%E5%AD%97%E7%9A%84%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="toc-number">1.</span> <span class="toc-text">基于名字的虚拟主机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%A4%84%E7%90%86-Host-%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="toc-number">2.</span> <span class="toc-text">如何避免处理 Host 未定义的请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%90%8D%E7%A7%B0%E5%92%8Cip%E7%9A%84%E6%B7%B7%E5%90%88%E8%99%9A%E6%8B%9F%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">基于名称和ip的混合虚拟服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84-php-%E7%BD%91%E7%AB%99%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">一个简单的 php 网站配置</span></a></li></ol>
                       </div>
                     </button>
                   
@@ -304,7 +304,7 @@
 <script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
  
 
-<script async src="/js/app.js?v=1624716317175"></script>
+<script async src="/js/app.js?v=1624759134174"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
